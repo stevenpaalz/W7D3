@@ -38,7 +38,11 @@ RSpec.describe User, type: :model do
 
   describe "User::find_by_credentials" do 
     it "should find user" do
-      expect(User.find_by_credentials('amin', 'aminbabar')).to be(test_user)
+      # debugger
+    test_user2 = User.create(
+    username: 'amin',
+    password: 'aminbabar')
+      expect(User.find_by_credentials('amin', 'aminbabar')).to eq(test_user2)
     end
   end
 
