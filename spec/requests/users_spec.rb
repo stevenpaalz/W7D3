@@ -8,7 +8,7 @@ RSpec.describe "Users", type: :request do
   #   end
     describe "GET /users (:index)" do
       it "renders the users index" do
-        get :index
+        get users_url
         expect(response).to have_http_status(200)
         expect(response.body).to include("Users Index")
       end
@@ -16,7 +16,7 @@ RSpec.describe "Users", type: :request do
 
     describe "POST /users (:create)" do
       it "fails with invalid params" do
-        post :create, params: { user: { username: "amin"} }
+        post users_url, params: { user: { username: "amin"} }
       end
     end
 
@@ -26,13 +26,14 @@ RSpec.describe "Users", type: :request do
           username: 'amin',
           password: 'aminbabar'
         )
-        get :show, params: {id: 1}
+        # debugger
+        get user_url(u.id), params: {id: u.id}
       end
     end
 
     describe "GET /users (:new)" do
       it "renders the new form" do
-        get :new
+        get new_user_url
         expect(response).to have_http_status(200)
         expect(response.body).to include("Sign Up")
       end
