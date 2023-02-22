@@ -53,8 +53,24 @@ RSpec.describe User, type: :model do
   end
 
   describe "#password=" do 
-    it "should set password_digest to a BCrypt object" do
-      expect(test_user.password_digest).to be_a(BCrypt::Password)
+    it "should receive BCrypt::Password.create method call" do
+      expect(BCrypt::Password).to receive(:create)
+      User.create(username: 'Test', password: "passwordtest")
     end
   end
+
+  describe "#generate_session_token" do
+    it "should generate a session token" do
+      expect(test_user.generate_session_token).to be_a(String)
+    end
+  end
+
+  describe "#reset_session_token" do
+    it "new session token should be different than previous" do
+      current_token = test_user.session_token
+      test_user.reset_session_token
+      expect(test_user.session_token).to_not eq(current_token)
+    end
+  end
+
 end
